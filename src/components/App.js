@@ -1,15 +1,16 @@
-import './App.css';
-import { Profile } from './components/social-profile/Profile';
-import { Statistics } from './components/Statistics/Statistics';
-import ColorPicker from './components/ColorPicker/ColorPicker';
-
-import userInfo from './user.json';
-import statisticsInfo from './uploadStatics.json';
-import colorPickerOptions from './colorPicker.json';
 import { Component } from 'react';
-import TodoList from './components/TodoList';
 
-class App extends Component {
+import { Profile } from './social-profile/Profile';
+import { Statistics } from './Statistics/Statistics';
+import ColorPicker from './ColorPicker/ColorPicker';
+import TodoList from './TodoList';
+import Collapsible from './Collapsible';
+
+import userInfo from '../user.json';
+import statisticsInfo from '../uploadStatics.json';
+import colorPickerOptions from '../colorPicker.json';
+
+export class App extends Component {
   state = {
     todos: [
       { id: 'id-1', text: 'Выучить основы React', completed: true },
@@ -31,7 +32,18 @@ class App extends Component {
 
     return (
       <>
-        <div>
+        <Collapsible triggerPosition="bottom">
+          Requires no additional setup, babel plugin, or other config
+        </Collapsible>
+        <hr />
+        <Collapsible isOpen mt={5}>
+          Requires no additional setup, babel plugin, or other config
+        </Collapsible>
+        <hr />
+        <Collapsible isDisabled>
+          Requires no additional setup, babel plugin, or other config
+        </Collapsible>
+        {/* <div>
           <p>Общее к-во: {totalTodoCount}</p>
           <p>К-во выполненных: {completedTodos} </p>
         </div>
@@ -48,10 +60,8 @@ class App extends Component {
           likes={userInfo.stats.likes}
           stats={userInfo.stats}
         />
-        <Statistics events={statisticsInfo} title={'Upload stats'} />
+        <Statistics events={statisticsInfo} title={'Upload stats'} /> */}
       </>
     );
   }
 }
-
-export default App;
