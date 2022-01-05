@@ -1,22 +1,30 @@
 import { Component } from 'react';
+import ReactPlayer from 'react-player/vimeo';
 
 import { Profile } from './social-profile/Profile';
 import { Statistics } from './Statistics/Statistics';
 import ColorPicker from './ColorPicker/ColorPicker';
 import TodoList from './TodoList';
 import Collapsible from './Collapsible';
+import { VideoList } from './VideoList/VideoList';
 
 import userInfo from '../user.json';
 import statisticsInfo from '../uploadStatics.json';
 import colorPickerOptions from '../colorPicker.json';
+import videos from '../videos.json';
 
 export class App extends Component {
   state = {
+    selectedVideo: null,
     todos: [
       { id: 'id-1', text: 'Выучить основы React', completed: true },
       { id: 'id-2', text: 'Разобраться с React Router', completed: false },
       { id: 'id-3', text: 'Пережить Redux', completed: false },
     ],
+  };
+
+  onSelectVideo = link => {
+    this.setState({ selectedVideo: link });
   };
 
   deletedTodo = todoId => {
@@ -32,7 +40,13 @@ export class App extends Component {
 
     return (
       <>
-        <Collapsible triggerPosition="bottom">
+        <VideoList
+          videos={videos}
+          onSelect={this.onSelectVideo}
+          selectedVideo={this.state.selectedVideo}
+        />
+        {this.state.selectedVideo && <ReactPlayer url={this.state.selectedVideo} controls />}
+        {/* <Collapsible triggerPosition="bottom">
           Requires no additional setup, babel plugin, or other config
         </Collapsible>
         <hr />
@@ -42,7 +56,7 @@ export class App extends Component {
         <hr />
         <Collapsible isDisabled>
           Requires no additional setup, babel plugin, or other config
-        </Collapsible>
+        </Collapsible> */}
         {/* <div>
           <p>Общее к-во: {totalTodoCount}</p>
           <p>К-во выполненных: {completedTodos} </p>
