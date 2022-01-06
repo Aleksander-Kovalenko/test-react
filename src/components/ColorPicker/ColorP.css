@@ -1,0 +1,13 @@
+.ColorPicker__option {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+  border: none;
+  outline: none;
+  transition: transform 250ms liner;
+}
+.ColorPicker__option--active {
+  transform: scale(1.1);
+  border: 2px solid black;
+}

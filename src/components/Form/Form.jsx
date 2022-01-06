@@ -4,6 +4,8 @@ export class Form extends Component {
   state = {
     name: '',
     tag: '',
+    experience: '',
+    license: false,
   };
 
   handleSubmitForm = e => {
@@ -13,8 +15,8 @@ export class Form extends Component {
   };
 
   handleNameChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+    const { name, value, checked, type } = e.target;
+    this.setState({ [name]: type === 'checkbox' ? checked : value });
   };
 
   reset = () => {
@@ -32,8 +34,54 @@ export class Form extends Component {
           Прозвище
           <input type="text" name="tag" value={this.state.tag} onChange={this.handleNameChange} />
         </label>
+        <br />
+        <label>
+          Junior
+          <input
+            type="radio"
+            name="experience"
+            value="junior"
+            onChange={this.handleNameChange}
+            checked={this.state.experience === 'junior'}
+          />
+        </label>
+        <label>
+          Middle
+          <input
+            type="radio"
+            name="experience"
+            value="middle"
+            onChange={this.handleNameChange}
+            checked={this.state.experience === 'middle'}
+          />
+        </label>
+        <label>
+          Senior
+          <input
+            type="radio"
+            name="experience"
+            value="senior"
+            onChange={this.handleNameChange}
+            checked={this.state.experience === 'senior'}
+          />
+        </label>
 
-        <button type="submit">Отправить</button>
+        <br />
+        <label>
+          <input
+            type="checkbox"
+            name="license"
+            checked={this.state.license}
+            onChange={this.handleNameChange}
+          />
+          Согласен с условием
+        </label>
+
+        <br />
+
+        <button type="submit" disabled={!this.state.license}>
+          Отправить
+        </button>
       </form>
     );
   }
