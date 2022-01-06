@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player/vimeo';
 import { Profile } from './social-profile/Profile';
 import { Statistics } from './Statistics/Statistics';
 import ColorPicker from './ColorPicker/ColorPicker';
-import TodoList from './TodoList';
+import TodoList from './TodoList/TodoList';
 import Collapsible from './Collapsible';
 import { VideoList } from './VideoList/VideoList';
 
@@ -35,6 +35,23 @@ export class App extends Component {
     }));
   };
 
+  toggleCompleted = todoId => {
+    console.log(todoId);
+
+    this.setState(prevState => ({
+      todos: prevState.todos.map(todo => {
+        if (todo.id === todoId) {
+          console.log('нашли что надо');
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        }
+        return todo;
+      }),
+    }));
+  };
+
   handleForm = data => {
     console.log(data);
   };
@@ -46,9 +63,10 @@ export class App extends Component {
 
     return (
       <>
-        <Container>
+        {/* <Container>
           <Form onSubmit={this.handleForm} />
-        </Container>
+        </Container> */}
+
         {/* <VideoList
           videos={videos}
           onSelect={this.onSelectVideo}
@@ -67,14 +85,19 @@ export class App extends Component {
         <Collapsible isDisabled>
           Requires no additional setup, babel plugin, or other config
         </Collapsible> */}
-        {/* 
+
         <div>
           <p>Общее к-во: {totalTodoCount}</p>
           <p>К-во выполненных: {completedTodos} </p>
         </div>
-        <TodoList todos={todos} onDeleteTodo={this.deletedTodo} /> */}
 
-        <ColorPicker options={colorPickerOptions} />
+        <TodoList
+          todos={todos}
+          onDeleteTodo={this.deletedTodo}
+          onToggleCompleted={this.toggleCompleted}
+        />
+
+        {/* <ColorPicker options={colorPickerOptions} /> */}
 
         {/* <Profile
           username={userInfo.username}
