@@ -12,6 +12,8 @@ import userInfo from '../user.json';
 import statisticsInfo from '../uploadStatics.json';
 import colorPickerOptions from '../colorPicker.json';
 import videos from '../videos.json';
+import { Container } from './App.styled';
+import { Form } from './Form/Form';
 
 export class App extends Component {
   state = {
@@ -33,6 +35,10 @@ export class App extends Component {
     }));
   };
 
+  handleForm = data => {
+    console.log(data);
+  };
+
   render() {
     const { todos } = this.state;
     const totalTodoCount = todos.length;
@@ -40,12 +46,15 @@ export class App extends Component {
 
     return (
       <>
-        <VideoList
+        <Container>
+          <Form onSubmit={this.handleForm} />
+        </Container>
+        {/* <VideoList
           videos={videos}
           onSelect={this.onSelectVideo}
           selectedVideo={this.state.selectedVideo}
         />
-        {this.state.selectedVideo && <ReactPlayer url={this.state.selectedVideo} controls />}
+        {this.state.selectedVideo && <ReactPlayer url={this.state.selectedVideo} controls />} */}
         {/* <Collapsible triggerPosition="bottom">
           Requires no additional setup, babel plugin, or other config
         </Collapsible>
