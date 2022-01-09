@@ -16,6 +16,8 @@ import { Container } from './App.styled';
 import { Form } from './Form/Form';
 import { Modal } from './Modal/Modal';
 import { Clock } from './Clock/Clock';
+import { Tabs } from './Tabs/Tabs';
+import tabs from '../tabs.json';
 
 export class App extends Component {
   state = {
@@ -84,12 +86,14 @@ export class App extends Component {
 
     return (
       <>
-        <Container>
+        {/* <Tabs items={tabs} /> */}
+
+        {/* <Container>
           <button type="button" onClick={this.onToggleModal}>
             Открыть/Закрыть таймер
           </button>
           {showModal && <Clock />}
-        </Container>
+        </Container> */}
 
         {/* <Container>
           <button type="button" onClick={this.onToggleModal}>
