@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import ReactPlayer from 'react-player/vimeo';
+import { ToastContainer } from 'react-toastify';
 
 import { Container } from './App.styled';
 
@@ -15,6 +16,7 @@ import statisticsInfo from '../uploadStatics.json';
 import colorPickerOptions from '../colorPicker.json';
 import videos from '../videos.json';
 import tabs from '../tabs.json';
+import todos from '../todos.json';
 
 import { Form } from './Form/Form';
 import { Modal } from './Modal/Modal';
@@ -24,16 +26,44 @@ import { IconButtons } from './IconButtons/IconButtons';
 // МЕТОД ДОБАВЛЕНИЯ ИКОНОК
 import { ReactComponent as AddIcon } from '../icons/add.svg';
 import { ReactComponent as DeleteIcon } from '../icons/add.svg';
+import { PokemonForm } from './APIpokemon/PokemonForm';
+import { PokemonInfo } from './APIpokemon/PokemonInfo';
 export class App extends Component {
   state = {
     selectedVideo: null,
-    todos: [
-      { id: 'id-1', text: 'Выучить основы React', completed: true },
-      { id: 'id-2', text: 'Разобраться с React Router', completed: false },
-      { id: 'id-3', text: 'Пережить Redux', completed: false },
-    ],
+    todos: todos,
     showModal: false,
+    pokemonName: '',
+    loading: false,
   };
+
+  componentDidMount() {
+    // РАБОТА С Записю todos в LocalStorage
+
+    // const todos = localStorage.getItem('todos');
+    // const parsedTodos = JSON.parse(todos);
+    // if (parsedTodos) {
+    //   this.setState({ todos: parsedTodos });
+    // }
+    // ============================
+
+    // Работа с REST API pokeapi
+    this.setState({ loading: true });
+    setTimeout(() => {
+      fetch('https://pokeapi.co/api/v2/pokemon/ditto')
+        .then(resp => resp.json())
+        .then(pokemon => this.setState({ pokemon }))
+        .finally(() => {
+          this.setState({ loading: false });
+        });
+    }, 1000);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state != prevState) {
+      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    }
+  }
 
   onToggleModal = () => {
     this.setState({ showModal: !this.state.showModal });
@@ -68,30 +98,28 @@ export class App extends Component {
 
   handleForm = data => {
     console.log(data);
+    this.setState({ pokemonName: data });
   };
-  componentDidMount() {
-    const todos = localStorage.getItem('todos');
-    const parsedTodos = JSON.parse(todos);
-
-    if (parsedTodos) {
-      this.setState({ todos: parsedTodos });
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state != prevState) {
-      localStorage.setItem('todos', JSON.stringify(this.state.todos));
-    }
-  }
 
   render() {
-    const { todos, showModal } = this.state;
+    const { todos, showModal, pokemonName, loading } = this.state;
     const totalTodoCount = todos.length;
     const completedTodos = todos.reduce((acc, todo) => (todo.completed ? acc + 1 : acc), 0);
 
     return (
       <>
         <Container>
+          {/* ПОДГРУЗКА ИЗОБРАЖЕНИЯ СПИНЕР */}
+          <PokemonForm onSubmit={this.handleForm} />
+          {/* Библиотека ставится на самом верхнем уровне */}
+          <PokemonInfo pokemonName={pokemonName} />
+          <ToastContainer autoClose={3000} />
+          {/* {loading && <h1>Загружаем...</h1>}
+          <div style={{ maxWidth: 1170, margin: '0 auto', padding: 20 }}>
+            {pokemon && <div>{pokemon.name}</div>}
+          </div> */}
+        </Container>
+        {/* <Container>
           <IconButtons onClick={this.onToggleModal}>
             <AddIcon width="40" height="40" fill="#fff" />
           </IconButtons>
@@ -119,7 +147,7 @@ export class App extends Component {
           todos={todos}
           onDeleteTodo={this.deletedTodo}
           onToggleCompleted={this.toggleCompleted}
-        />
+        /> */}
         {/* <Tabs items={tabs} /> */}
 
         {/* <Container>
