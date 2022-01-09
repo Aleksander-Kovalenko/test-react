@@ -97,7 +97,6 @@ export class App extends Component {
   };
 
   handleForm = data => {
-    console.log(data);
     this.setState({ pokemonName: data });
   };
 
