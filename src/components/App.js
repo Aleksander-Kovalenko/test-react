@@ -14,6 +14,7 @@ import colorPickerOptions from '../colorPicker.json';
 import videos from '../videos.json';
 import { Container } from './App.styled';
 import { Form } from './Form/Form';
+import { Modal } from './Modal/Modal';
 
 export class App extends Component {
   state = {
@@ -23,6 +24,11 @@ export class App extends Component {
       { id: 'id-2', text: 'Разобраться с React Router', completed: false },
       { id: 'id-3', text: 'Пережить Redux', completed: false },
     ],
+    showModal: false,
+  };
+
+  onToggleModal = () => {
+    this.setState({ showModal: !this.state.showModal });
   };
 
   onSelectVideo = link => {
@@ -55,6 +61,20 @@ export class App extends Component {
   handleForm = data => {
     console.log(data);
   };
+  componentDidMount() {
+    const todos = localStorage.getItem('todos');
+    const parsedTodos = JSON.parse(todos);
+
+    if (parsedTodos) {
+      this.setState({ todos: parsedTodos });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state != prevState) {
+      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    }
+  }
 
   render() {
     const { todos } = this.state;
@@ -63,6 +83,23 @@ export class App extends Component {
 
     return (
       <>
+        <button type="button" onClick={this.onToggleModal}>
+          Открыть модалку
+        </button>
+        {this.state.showModal && (
+          <Modal onClose={this.onToggleModal}>
+            <h1>Привет, это модалка </h1>
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque, possimus tempore
+              voluptates voluptatem culpa sed repellendus id dolorem molestiae voluptatum, quidem
+              saepe laboriosam modi dolore hic numquam blanditiis accusamus laudantium.
+            </p>
+            <button type="button" onClick={this.onToggleModal}>
+              Закрыть модалку
+            </button>
+          </Modal>
+        )}
+
         {/* <Container>
           <Form onSubmit={this.handleForm} />
         </Container> */}
