@@ -15,6 +15,7 @@ import videos from '../videos.json';
 import { Container } from './App.styled';
 import { Form } from './Form/Form';
 import { Modal } from './Modal/Modal';
+import { Clock } from './Clock/Clock';
 
 export class App extends Component {
   state = {
@@ -77,28 +78,37 @@ export class App extends Component {
   }
 
   render() {
-    const { todos } = this.state;
+    const { todos, showModal } = this.state;
     const totalTodoCount = todos.length;
     const completedTodos = todos.reduce((acc, todo) => (todo.completed ? acc + 1 : acc), 0);
 
     return (
       <>
-        <button type="button" onClick={this.onToggleModal}>
-          Открыть модалку
-        </button>
-        {this.state.showModal && (
-          <Modal onClose={this.onToggleModal}>
-            <h1>Привет, это модалка </h1>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque, possimus tempore
-              voluptates voluptatem culpa sed repellendus id dolorem molestiae voluptatum, quidem
-              saepe laboriosam modi dolore hic numquam blanditiis accusamus laudantium.
-            </p>
-            <button type="button" onClick={this.onToggleModal}>
-              Закрыть модалку
-            </button>
-          </Modal>
-        )}
+        <Container>
+          <button type="button" onClick={this.onToggleModal}>
+            Открыть/Закрыть таймер
+          </button>
+          {showModal && <Clock />}
+        </Container>
+
+        {/* <Container>
+          <button type="button" onClick={this.onToggleModal}>
+            Открыть модалку
+          </button>
+          {this.state.showModal && (
+            <Modal onClose={this.onToggleModal}>
+              <h1>Привет, это модалка </h1>
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque, possimus tempore
+                voluptates voluptatem culpa sed repellendus id dolorem molestiae voluptatum, quidem
+                saepe laboriosam modi dolore hic numquam blanditiis accusamus laudantium.
+              </p>
+              <button type="button" onClick={this.onToggleModal}>
+                Закрыть модалку
+              </button>
+            </Modal>
+          )}
+        </Container> */}
 
         {/* <Container>
           <Form onSubmit={this.handleForm} />
