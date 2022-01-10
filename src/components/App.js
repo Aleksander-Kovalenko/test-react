@@ -49,14 +49,6 @@ export class App extends Component {
 
     // Работа с REST API pokeapi
     this.setState({ loading: true });
-    setTimeout(() => {
-      fetch('https://pokeapi.co/api/v2/pokemon/ditto')
-        .then(resp => resp.json())
-        .then(pokemon => this.setState({ pokemon }))
-        .finally(() => {
-          this.setState({ loading: false });
-        });
-    }, 1000);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -80,8 +72,6 @@ export class App extends Component {
   };
 
   toggleCompleted = todoId => {
-    console.log(todoId);
-
     this.setState(prevState => ({
       todos: prevState.todos.map(todo => {
         if (todo.id === todoId) {
