@@ -188,7 +188,7 @@ export class App extends Component {
           Requires no additional setup, babel plugin, or other config
         </Collapsible> */}
 
-        {/* <ColorPicker options={colorPickerOptions} /> */}
+        <ColorPicker options={colorPickerOptions} />
 
         {/* <Profile
           username={userInfo.username}

@@ -1,44 +1,28 @@
-import classNames from 'classnames';
-import React, { Component } from 'react';
-import './ColorP.css';
+import { useState } from 'react';
+import styles from './ColorPicker';
 
-import { ColorPickerContainer, ColorPickerTitle, ButtonOptions } from './ColorPicker.styled.jsx';
+export default function ColorPicker({ options }) {
+  const [activeOptionInd, setActiveOptionInd] = useState(0);
 
-class ColorPicker extends Component {
-  state = {
-    activeOptionInd: 0,
+  const makeOptionClassName = index => {
+    return index === activeOptionInd ? styles.activeOption : styles.option;
   };
-
-  handleClickColor = index => {
-    this.setState({ activeOptionInd: index });
-  };
-
-  makeOptionClassName = index => {
-    return classNames('ColorPicker__option', {
-      'ColorPicker__option--active': index === this.state.activeOptionInd,
-    });
-  };
-
-  render() {
-    const { activeOptionInd } = this.state;
-    return (
-      <ColorPickerContainer>
-        <ColorPickerTitle>Color Picker</ColorPickerTitle>
-        <div>
-          {this.props.options.map(({ label, color }, index) => (
-            <button
-              className={this.makeOptionClassName(index)}
-              onClick={() => this.handleClickColor(index)}
-              key={label}
-              style={{
-                backgroundColor: color,
-              }}
-            ></button>
-          ))}
-        </div>
-      </ColorPickerContainer>
-    );
-  }
+  const { label } = options[activeOptionInd];
+  return (
+    <div>
+      <h2>Color Picker</h2>
+      <div>
+        {options.map(({ label, color }, index) => (
+          <button
+            className={makeOptionClassName(index)}
+            onClick={() => setActiveOptionInd(index)}
+            key={label}
+            style={{
+              backgroundColor: color,
+            }}
+          ></button>
+        ))}
+      </div>
+    </div>
+  );
 }
-
-export default ColorPicker;

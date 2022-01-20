@@ -1,4 +1,4 @@
-.ColorPicker__option {
+.option {
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -7,7 +7,7 @@
   outline: none;
   transition: transform 250ms liner;
 }
-.ColorPicker__option--active {
+.activeOption {
   transform: scale(1.1);
   border: 2px solid black;
 }
