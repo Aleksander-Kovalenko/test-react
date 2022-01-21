@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './ColorPicker';
+import styles from './ColorPicker.module.css';
 
 export default function ColorPicker({ options }) {
   const [activeOptionInd, setActiveOptionInd] = useState(0);
